@@ -48,6 +48,22 @@ def rating_tier(rating):
         result = 'слабо'
     return result
 
+def decade_label(year):
+    '''Возвращает через оператор match возвращает метку "новые" 
+    (после 2020), "недавние" (2015–2020) или "старые" (раньше 2015).'''
+    if not isinstance(year, int):
+        return 'Год фильма должен быть чилсом'
+    match year:
+        case x if x >= 2020:
+            return 'Новые'    
+        case x if 2015 <= x <2020:
+            return 'недавние'
+        case x if 0 < x < 2015:
+            return 'старые' 
+        case x if x < 0:
+            return 'год фильма не может быть отрицательным'
+        
+    
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -80,4 +96,6 @@ print(f"Результат {func_2}")
 
 print(duration_in_hours(1000))
 
-print(f'оценка рейтинга фильма  {rating_tier('ff')}')
+print(f'оценка рейтинга фильма  {rating_tier(9.5)}')
+
+print(f'Оценка фильма по возрасту {decade_label('f')}')
