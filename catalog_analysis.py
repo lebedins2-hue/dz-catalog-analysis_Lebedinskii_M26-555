@@ -19,7 +19,8 @@ def catalog_age_stats(movies, current_year=2026):
     else:
         (None, None, None)
 
-    return (current_year - min(years), current_year - max(years), current_year - ceil(sum(years)/len(movies)))
+    return (current_year - min(years), current_year - max(years), 
+            current_year - ceil(sum(years)/len(movies)))
     
 
 def duration_in_hours(minutes):
@@ -63,6 +64,13 @@ def decade_label(year):
         case x if x < 0:
             return 'год фильма не может быть отрицательным'
         
+def count_long_movies(movies, threshold=120):
+    '''Возвращает количество фильмов длиннее threshold минут'''
+    count = 0
+    for movie in movies:
+        if movie['duration_min'] > threshold:
+            count += 1
+    return count
     
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -87,15 +95,19 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ]
 
-avg = average_rating(movies)
-print(f"Средний рейтинг {avg}")
+print("Фильмы не относящиеся к жанру comedy")
+for movie in movies:
+    if "comedy" in movie.get('genres', []): continue
+    print(movie['title'])
 
+counter = 0    
+while counter < len(movies):
+    if rating_tier(movies[counter].get('rating', [])) == 'шедевр':
+        print('Первый по порядку в списке фильм с рейтингом выше 9.0:  ',
+              movies[counter].get('title', 'Без названия'))
+        break
+    counter += 1
+else:
+    print('Шедевров не найдено')
 
-func_2 = catalog_age_stats(movies)
-print(f"Результат {func_2}")
-
-print(duration_in_hours(1000))
-
-print(f'оценка рейтинга фильма  {rating_tier(9.5)}')
-
-print(f'Оценка фильма по возрасту {decade_label('f')}')
+print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
