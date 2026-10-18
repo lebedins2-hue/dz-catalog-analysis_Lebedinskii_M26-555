@@ -71,6 +71,17 @@ def count_long_movies(movies, threshold=120):
         if movie['duration_min'] > threshold:
             count += 1
     return count
+
+def normalize_title(title):
+    '''Приводит строку к формату Title Case'''
+    if not isinstance(title, str):
+        return "Введите пожалуйста строку"
+    words = title.split()
+    string = ""
+    for word in words:
+        string += word[0][0].upper() + words[0][1:] + " "
+        word = title.split()
+    return string
     
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -111,3 +122,6 @@ else:
     print('Шедевров не найдено')
 
 print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
+
+title = 'sdfsdf dsfsdfsdf sdf sdf'
+print(normalize_title(title))
