@@ -94,6 +94,19 @@ def make_slug(title):
     string = string[:-1]
     return print(string) 
 
+def format_report_line(movie):
+    '''Возвращает единую строку с описанием фильма
+    "The Quiet Algorithm" (2024) — 9.2/10, 1ч 58м, жанры: drama, sci-fi '''
+    title = movie['title']
+    year = movie['year']
+    rating = movie['rating']
+    time = duration_in_hours(movie['duration_min'])
+    genres = ','.join(sorted(list(movie['genres'])))
+    result = f'"{title}" ({year}) - {rating}/10, {time}, жанры: {genres}'
+    return print(result)
+
+    
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -134,4 +147,5 @@ else:
 
 print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
-normalize_title("the quiet algorithm")
+format_report_line(movies[5])
+
