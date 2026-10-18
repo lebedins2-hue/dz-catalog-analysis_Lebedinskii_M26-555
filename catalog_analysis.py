@@ -92,8 +92,8 @@ def make_slug(title):
     for word in words:
         string += word + "-"
     string = string[:-1]
-    return print(string)
-    
+    return print(string) 
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -134,7 +134,4 @@ else:
 
 print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
-title = "SDFSDF Sfgdsfsdf SDFSf"
-
-normalize_title("silent house")      
-make_slug("Silent Hours")
+normalize_title("the quiet algorithm")
