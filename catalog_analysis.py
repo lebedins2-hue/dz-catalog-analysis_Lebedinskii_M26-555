@@ -13,12 +13,26 @@ def catalog_age_stats(movies, current_year=2026):
     '''Возвращает кортеж (самый старый фильм в годах, 
        самый новый фильм в годах, среднее), где среднее 
        округлено вверх до целого'''
-    pass
+
+    if movies:
+        years = [movie['year'] for movie in movies]
+    else:
+        (None, None, None)
+
+    return (min(years), max(years), round(sum(years)/len(movies)))
+    
 
 def duration_in_hours(minutes):
     ''' Переводит минуты в формат часы + минуты,
         используя целочисленное деление и остаток от деления'''
-    pass
+
+    if minutes >= 0:
+        hours = minutes // 60
+        minute = minutes % 60
+    else:
+        return print('Время не может быть отрицательным')
+    
+    return f"{hours} ч. {minute} мин."
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -45,3 +59,9 @@ movies = [
 
 avg = average_rating(movies)
 print(f"Средний рейтинг {avg}")
+
+
+func_2 = catalog_age_stats(movies)
+print(f"Результат {func_2}")
+
+print(duration_in_hours(-1))
