@@ -75,13 +75,24 @@ def count_long_movies(movies, threshold=120):
 def normalize_title(title):
     '''Приводит строку к формату Title Case'''
     if not isinstance(title, str):
-        return "Введите пожалуйста строку"
+        return "Входное значение должно быть строкой"
     words = title.split()
     string = ""
     for word in words:
-        string += word[0][0].upper() + words[0][1:] + " "
-        word = title.split()
-    return string
+        string += word[0].upper() + word[1:] + " "
+    return print(string)
+
+def make_slug(title):
+    '''Превращает номрализованное название в "слаг" 
+        вида the-quiet-algorithm'''
+    if not isinstance(title, str):
+        return "Входное значение должно быть строкой"
+    words = title.lower().split()
+    string = ""
+    for word in words:
+        string += word + "-"
+    string = string[:-1]
+    return print(string)
     
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -123,5 +134,7 @@ else:
 
 print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
-title = 'sdfsdf dsfsdfsdf sdf sdf'
-print(normalize_title(title))
+title = "SDFSDF Sfgdsfsdf SDFSf"
+
+normalize_title("silent house")      
+make_slug("Silent Hours")
