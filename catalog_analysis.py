@@ -25,7 +25,6 @@ def catalog_age_stats(movies, current_year=2026):
 def duration_in_hours(minutes):
     ''' Переводит минуты в формат часы + минуты,
         используя целочисленное деление и остаток от деления'''
-
     if minutes >= 0:
         hours = minutes // 60
         minute = minutes % 60
