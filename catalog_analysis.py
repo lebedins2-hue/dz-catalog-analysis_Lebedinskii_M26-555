@@ -19,7 +19,7 @@ def catalog_age_stats(movies, current_year=2026):
     else:
         (None, None, None)
 
-    return (min(years), max(years), ceil(sum(years)/len(movies)))
+    return (current_year - min(years), current_year - max(years), current_year - ceil(sum(years)/len(movies)))
     
 
 def duration_in_hours(minutes):
