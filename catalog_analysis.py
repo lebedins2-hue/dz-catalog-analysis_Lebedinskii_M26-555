@@ -19,7 +19,7 @@ def catalog_age_stats(movies, current_year=2026):
     else:
         (None, None, None)
 
-    return (min(years), max(years), round(sum(years)/len(movies)))
+    return (min(years), max(years), ceil(sum(years)/len(movies)))
     
 
 def duration_in_hours(minutes):
@@ -63,4 +63,4 @@ print(f"Средний рейтинг {avg}")
 func_2 = catalog_age_stats(movies)
 print(f"Результат {func_2}")
 
-print(duration_in_hours(-1))
+print(duration_in_hours(1000))
