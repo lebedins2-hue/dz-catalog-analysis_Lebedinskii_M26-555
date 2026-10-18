@@ -33,6 +33,21 @@ def duration_in_hours(minutes):
     
     return f"{hours} ч. {minute} мин."
 
+def rating_tier(rating):
+    ''' по оценке возвращает категорию: "шедевр" (≥9),
+      "хорошо" (7–8.9), "средне" (5–6.9), "слабо" (<5).'''
+    if not isinstance(rating, (int, float)):
+        return "Рейтинг фильма должен быть числом"
+    if rating >= 9:
+        result = 'шедевр'
+    elif rating >= 7:
+        result = 'хорошо'
+    elif rating >= 5:
+        result = 'средне'
+    else:
+        result = 'слабо'
+    return result
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -64,3 +79,5 @@ func_2 = catalog_age_stats(movies)
 print(f"Результат {func_2}")
 
 print(duration_in_hours(1000))
+
+print(f'оценка рейтинга фильма  {rating_tier('ff')}')
