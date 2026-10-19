@@ -188,6 +188,13 @@ def genres_only_in_one(movies_a, movies_b):
     result = genres_a - genres_b
     return result
 
+def iter_high_rated(movies, min_rating=8.0):
+    ''' Отдает фильмы с рейтингом не ниже min_rating'''
+    for movie in movies:
+        if movie['rating'] >= min_rating:
+            yield movie
+
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -231,3 +238,6 @@ else:
 #d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
 
 print(genres_only_in_one(movies[5:6], movies[:5]))
+
+for movie in iter_high_rated(movies):
+    format_report_line(movie)
