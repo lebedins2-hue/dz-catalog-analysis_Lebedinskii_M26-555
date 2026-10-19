@@ -157,8 +157,7 @@ def all_genres(movies):
     '''Возвращает множество всех уникальных жанров каталога'''
     unic_ganres = set()
     for movie in movies:
-        for ganre in movie.get('genres',[]):
-            unic_ganres.add(ganre)
+        unic_ganres |= set(movie.get('genres',[]))
     return unic_ganres
 
 def common_actors(movie1, movie2):
@@ -174,6 +173,10 @@ def common_actors(movie1, movie2):
                 actors2.add(actor)
     
     return actors1 & actors2
+
+def genres_only_in_one(movies_a, movies_b):
+    '''Возвращает жанры встречающиеся в movies_a и не встречающиеся в movies_b'''
+pass
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -219,7 +222,7 @@ else:
 
 
 
-print(common_actors(movies[0], movies[5]))
+print(all_genres(movies))
 
 
 
