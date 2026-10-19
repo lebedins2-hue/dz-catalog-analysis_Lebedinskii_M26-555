@@ -176,7 +176,10 @@ def common_actors(movie1, movie2):
 
 def genres_only_in_one(movies_a, movies_b):
     '''Возвращает жанры встречающиеся в movies_a и не встречающиеся в movies_b'''
-pass
+    genres_a = set(movies_a.get('genres',[]))
+    genres_b = set(movies_b.get('genres',[]))
+    result = genres_a - genres_b
+    return result
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -219,10 +222,4 @@ else:
 #print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
 #d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
-
-
-
-print(all_genres(movies))
-
-
 
