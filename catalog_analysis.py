@@ -101,11 +101,57 @@ def format_report_line(movie):
     year = movie['year']
     rating = movie['rating']
     time = duration_in_hours(movie['duration_min'])
-    genres = ','.join(sorted(list(movie['genres'])))
+    genres = ', '.join(sorted(list(movie['genres'])))
     result = f'"{title}" ({year}) - {rating}/10, {time}, жанры: {genres}'
     return print(result)
 
+def titles_sorted_by_rating(movies):
+    '''Возвращает список названий фильмов, отсортированных по убыванию рейтинга '''
+    sort_movies = sorted(movies, key = lambda x: x['rating'], reverse = True)
+    print('sort_movies   :',sort_movies)
+    result = [movie['title'] for movie in sort_movies]
+    return result  
+
+def top_n_by_rating(movies, n=3):
+    '''Возвращает список из n кортежей (title, rating), топ по рейтингу'''
+    sort_movies = sorted(movies, key = lambda x: x['rating'], reverse=True)
+    top_movies = sort_movies[:n]
+    result = [((movie['title']),movie['rating']) for movie in top_movies]
     
+    return result
+
+def count_by_genre(movies):
+    ''' Возвращает словарь {жанр: количество фильмов}'''
+    #Найдем уникальные навания жанров в movies
+    unic_genres = set()
+    for movie in movies:
+        for genre in movie.get('genres', []):
+            unic_genres.add(genre)
+    #Для каждого уникального названия жанра найдем соответствие в movies и запишем в словарь
+    result = dict()
+    for gen in unic_genres:
+        count = 0
+        for movie in movies:
+            for genre in movie.get('genres',[]):
+                if gen == genre: 
+                    count += 1
+                    result[gen] = count            
+    return result
+
+def actor_filmography(movies):
+    ''' Возвращает словарь {актер: [список названий фильмов]}'''
+    unic_actor = set()
+    for movie in movies:
+        for actor in movie.get('actors', []):
+            unic_actor.add(actor)
+
+    result = dict()
+    for act in unic_actor:
+        for movie in movies:
+            for actor in movie.get('actors',[]):
+                if act == actor: 
+                    result.setdefault(act,[]).append(movie.get('title'))
+    return result                
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -145,7 +191,10 @@ while counter < len(movies):
 else:
     print('Шедевров не найдено')
 
-print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
+#print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
-format_report_line(movies[5])
+d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
+
+
+
 
