@@ -166,10 +166,10 @@ def common_actors(movie1, movie2):
     actors1 = set()
     actors2 = set()
     for movie in movies:
-        if movie.get('title') == movie1:
+        if movie.get('title') == movie1['title']:
             for actor in movie.get('actors', []):
                 actors1.add(actor)
-        elif movie.get('title', []) == movie2:
+        elif movie.get('title', []) == movie2['title']:
             for actor in movie.get('actors', []):
                 actors2.add(actor)
     
@@ -219,6 +219,7 @@ else:
 
 
 
+print(common_actors(movies[0], movies[5]))
 
 
 
