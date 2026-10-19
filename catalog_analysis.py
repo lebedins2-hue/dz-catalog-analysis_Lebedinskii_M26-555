@@ -151,7 +151,15 @@ def actor_filmography(movies):
             for actor in movie.get('actors',[]):
                 if act == actor: 
                     result.setdefault(act,[]).append(movie.get('title'))
-    return result                
+    return result    
+
+def all_genres(movies):
+    '''Возвращает множество всех уникальных жанров каталога'''
+    unic_ganres = set()
+    for movie in movies:
+        for ganre in movie.get('genres',[]):
+            unic_ganres.add(ganre)
+    return unic_ganres
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -193,7 +201,9 @@ else:
 
 #print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
 
-d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
+#d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
+
+print(all_genres(movies))
 
 
 
