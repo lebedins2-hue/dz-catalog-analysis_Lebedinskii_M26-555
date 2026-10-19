@@ -176,8 +176,15 @@ def common_actors(movie1, movie2):
 
 def genres_only_in_one(movies_a, movies_b):
     '''Возвращает жанры встречающиеся в movies_a и не встречающиеся в movies_b'''
-    genres_a = set(movies_a.get('genres',[]))
-    genres_b = set(movies_b.get('genres',[]))
+    #genres_a = set(movies_a.get('genres',[]))
+    #genres_b = set(movies_b.get('genres',[]))
+    genres_a = set()
+    genres_b = set()
+    for movie in movies_a:
+        genres_a |= set(movie.get('genres',[]))
+    for movie in movies_b:
+        genres_b |= set(movie.get('genres',[]))
+        
     result = genres_a - genres_b
     return result
 
@@ -223,3 +230,4 @@ else:
 
 #d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
 
+print(genres_only_in_one(movies[5:6], movies[:5]))
