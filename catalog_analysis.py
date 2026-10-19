@@ -103,7 +103,7 @@ def format_report_line(movie):
     time = duration_in_hours(movie['duration_min'])
     genres = ', '.join(sorted(list(movie['genres'])))
     result = f'"{title}" ({year}) - {rating}/10, {time}, жанры: {genres}'
-    return print(result)
+    return result
 
 def titles_sorted_by_rating(movies):
     '''Возвращает список названий фильмов, отсортированных по убыванию рейтинга '''
@@ -240,4 +240,4 @@ else:
 print(genres_only_in_one(movies[5:6], movies[:5]))
 
 for movie in iter_high_rated(movies):
-    format_report_line(movie)
+    print(format_report_line(movie))
