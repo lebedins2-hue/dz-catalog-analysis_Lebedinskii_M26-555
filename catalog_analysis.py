@@ -161,6 +161,20 @@ def all_genres(movies):
             unic_ganres.add(ganre)
     return unic_ganres
 
+def common_actors(movie1, movie2):
+    '''Возвращает множество актеров снимавшихся в обоих фильмах'''
+    actors1 = set()
+    actors2 = set()
+    for movie in movies:
+        if movie.get('title') == movie1:
+            for actor in movie.get('actors', []):
+                actors1.add(actor)
+        elif movie.get('title', []) == movie2:
+            for actor in movie.get('actors', []):
+                actors2.add(actor)
+    
+    return actors1 & actors2
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
@@ -203,7 +217,7 @@ else:
 
 #d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
 
-print(all_genres(movies))
+
 
 
 
