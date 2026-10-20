@@ -1,7 +1,8 @@
 from math import ceil
 
+
 def average_rating(movies):
-    ''' Возвращает среднюю оценку по каталогу, 
+    ''' Возвращает среднюю оценку рейтинга по каталогу, 
         округленную до одного знака'''
     
     if not movies:
@@ -17,10 +18,10 @@ def catalog_age_stats(movies, current_year=2026):
     if movies:
         years = [movie['year'] for movie in movies]
     else:
-        (None, None, None)
+        return (None, None, None)
 
     return (current_year - min(years), current_year - max(years), 
-            current_year - ceil(sum(years)/len(movies)))
+            ceil(current_year - (sum(years)/len(movies))))
     
 
 def duration_in_hours(minutes):
@@ -127,7 +128,8 @@ def count_by_genre(movies):
     for movie in movies:
         for genre in movie.get('genres', []):
             unic_genres.add(genre)
-    #Для каждого уникального названия жанра найдем соответствие в movies и запишем в словарь
+    #Для каждого уникального названия жанра найдем соответствие
+    #в movies и запишем в словарь
     result = dict()
     for gen in unic_genres:
         count = 0
@@ -175,7 +177,8 @@ def common_actors(movie1, movie2):
     return actors1 & actors2
 
 def genres_only_in_one(movies_a, movies_b):
-    '''Возвращает жанры встречающиеся в movies_a и не встречающиеся в movies_b'''
+    '''Возвращает жанры встречающиеся в movies_a и 
+        не встречающиеся в movies_b'''
     #genres_a = set(movies_a.get('genres',[]))
     #genres_b = set(movies_b.get('genres',[]))
     genres_a = set()
@@ -194,10 +197,39 @@ def iter_high_rated(movies, min_rating=8.0):
         if movie['rating'] >= min_rating:
             yield movie
 
+def build_report(movies):
+    '''бъединяет результаты всех предыдущих этапов в единый 
+        консольный отчет: общую статистику, топ-3 фильма,
+        количество фильмов по каждому жанру и полный список 
+        уникальных жанров каталога.'''
+
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+    print(f"\n\n\n\nСредний рейтинг фильма: {average_rating(movies)}")
+    average_year = catalog_age_stats(movies, current_year=2026)
+    print(f"Средний возраст фильмов: {average_year[2]} лет")
+    top_3 = top_n_by_rating(movies, n=3)
+    print('\n"Топ-3 фильма:"')
+    for movie in top_3:
+        for m in movies:
+            if movie[0] == m['title']:
+                print("  ", format_report_line(m))
+
+    print('\n Фильмов по жанрам:')
+    sorted_genres = sorted(count_by_genre(movies).items(), 
+                            key=lambda item: item[1], reverse=True)
+    for gen, count in sorted_genres:
+        print("  ",gen,"-",count)
+
+    ganres = ', '.join(sorted(all_genres(movies)))
+    print(f'\n Все жанры каталога: {ganres}')
+
+    return None
+   
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
-     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
+     "rating": 8.6, "duration_min": 155, "actors":
+     ["T. Chalamet", "R. Ferguson", "O. Isaac"]},
     {"title": "Kitchen Stories", "year": 2019, "genres": {"comedy", "drama"},
      "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "M. Ferguson"]},
     {"title": "silent hours", "year": 2016, "genres": {"thriller", "drama"},
@@ -220,7 +252,8 @@ movies = [
 
 print("Фильмы не относящиеся к жанру comedy")
 for movie in movies:
-    if "comedy" in movie.get('genres', []): continue
+    if "comedy" in movie.get('genres', []): 
+        continue
     print(movie['title'])
 
 counter = 0    
@@ -233,11 +266,19 @@ while counter < len(movies):
 else:
     print('Шедевров не найдено')
 
-#print(f"Количество фильмов длиннее 120 минут:  {count_long_movies(movies, threshold=120)}")
+print(f"Количество фильмов длиннее 120 минут: {count_long_movies(movies, threshold=120)}") # noqa: E501
 
-#d_films = {movie['title']: movie['rating'] for movie in movies if movie['rating'] > average_rating(movies)}
+d_films = {movie['title']: movie['rating'] for movie in movies 
+           if movie['rating'] > average_rating(movies)}
 
 print(genres_only_in_one(movies[5:6], movies[:5]))
 
 for movie in iter_high_rated(movies):
     print(format_report_line(movie))
+
+print("Суммарная длительность всех фильмов с рейтингом выше 7.0: ",
+      sum(m["duration_min"] for m in movies if m["rating"] > 7), 'мин')
+
+if __name__ == "__main__":
+    build_report(movies)
+
