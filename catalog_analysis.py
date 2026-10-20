@@ -203,8 +203,8 @@ def build_report(movies):
         количество фильмов по каждому жанру и полный список 
         уникальных жанров каталога.'''
 
-    print("ОТЧЕТ ПО КАТАЛОГУ")
-    print(f"\n\n\n\nСредний рейтинг фильма: {average_rating(movies)}")
+    print("\n\n\n\nОТЧЕТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг фильма: {average_rating(movies)}")
     average_year = catalog_age_stats(movies, current_year=2026)
     print(f"Средний возраст фильмов: {average_year[2]} лет")
     top_3 = top_n_by_rating(movies, n=3)
